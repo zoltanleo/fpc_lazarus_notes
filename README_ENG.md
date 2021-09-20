@@ -57,7 +57,7 @@ The x32 compiler should build easily without any additional hassle.
 
 ![](img/cross_05.png)
 
-*Note*: how to make the build mode of the executable file under x32, see [next chapter](###Build-modes-for-cross-compiler).
+*Note*: how to make the build mode of the executable file under x32, see [next chapter](#Build-modes-for-cross-compiler).
 
 
 
@@ -81,7 +81,7 @@ Then we patiently wait for building end.
 
 ![](img/cross_09.png)
 
-*Note*: how to make the build mode of the executable file under i386/amd64, see [next chapter](###Build-modes-for-cross-compiler).
+*Note*: how to make the build mode of the executable file under i386/amd64, see [next chapter](#Build-modes-for-cross-compiler).
 
 
 
@@ -107,7 +107,7 @@ Then we patiently wait for building end.
 
 ![](img/cross_12.png)
 
-*Note*: how to make the build mode of the executable file under x86-64, see [next chapter](###Build-modes-for-cross-compiler).
+*Note*: how to make the build mode of the executable file under x86-64, see [next chapter](#Build-modes-for-cross-compiler).
 
 
 
@@ -156,7 +156,7 @@ Sequentially selecting the specified build modes in the "Build modes" drop-down 
 | Release_linux_amd64  | Linux  | x86_64 | Don't uncheck the "Win32 GUI application" checkbox!          |
 | Release_Darwin_Cocoa | Darwin | x86_64 | Be sure to uncheck "Win32 GUI application"! See note         |
 
-*Note*: since each OS uses different widgetsets to display controls on the form(s), then for "my" MacOS (I wrote that I use Darwin with Cocoa widgets in the [previous chapter](####Darwin)) additional settings.
+*Note*: since each OS uses different widgetsets to display controls on the form(s), then for "my" MacOS (I wrote that I use Darwin with Cocoa widgets in the [previous chapter](#Darwin)) additional settings.
 
 
 
