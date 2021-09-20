@@ -125,7 +125,7 @@ In the tree that opens, find "Compiler options" item and proceed to setting the 
 
 By default, Lazarus has one build mode ("Default"), which builds an executable file with debug information.
 
-*In this case, the executable file in the "Default" mode will correspond to the bitness of the compiler (as we remember from the previous chapter, the bitness of the compiler will correspond to the bitness of fpcupdeluxe, with which it was assembled).*
+*In this case, the executable file in the "Default" mode will correspond to the bitness of the compiler (as we remember from the previous chapter, the bitness of the compiler will correspond to the bitness of fpcupdeluxe, with which it was builded).*
 
 ![](img/cross_15.png) 
 
