@@ -1,4 +1,5 @@
 # FPC/Lazarus Notes
+
 #### *Preamble*
 
 About 7 years ago, when I had thoughts to turn Pascal coding from a favorite hobby into a means of earning money, I began to think about the license purity of my programs.
@@ -11,27 +12,39 @@ But, like any open source, FPT/Lazarus requires manual assembly and tuning. And 
 
 I would be glad if this material helps anyone.
 
-
-
 Zoltanleo, aka Док (2021г.)
 
+## Table of contents
+
+[Building FPC/Lazarus](#building_fpc_lazarus)
+ * [Building via batch files](#building_via_batch_files)
+ * [Building via fpcupdeluxe](#building_via_fpcupdeluxe)
+[Установка Lazarus c QT-интерфейсом](#installing_qt_lazarus)
+ * [Windows](#qt_lazarus_windows)
+ * [Linux](#qt_lazarus_linux)
+[Cross compilation to FPC](#crosscompilling_fpc)
+ * [Installing the crosscompiler](#crosscompiler_install)
+   + [Windows](#crosscompiler_install_win)
+   + [Linux](#crosscompiler_install_linux)
+   + [Darwin](#crosscompiler_install_darwin)
+ * [Build modes for cross compiler](#crosscompilling_build_mode)
+ * [Building process of applications via a crosscompiler](#crosscompilling_building)
 
 
-## Biulding FPC/Lazarus. 
+## Building FPC/Lazarus <a name="building_fpc_lazarus"></a>
 
-### Biulding via batch files
+### Building via batch files <a name="building_via_batch_files"></a>
 
 Coming soon ...
 
-### Biulding via fpcupdeluxe
+### Building via fpcupdeluxe <a name="building_via_fpcupdeluxe"></a>
 
 Coming soon ...
 
+## Cross compilation to FPC <a name="crosscompilling_fpc"></a>
 
 
-## Cross compilation to FPC
-
-### Installing the crosscompiler 
+### Installing the crosscompiler <a name="crosscompiler_install"></a>
 
 We will assume that the compiler and lazarus are already installed using [fpcupdeluxe](https://github.com/LongDirtyAnimAlf/fpcupdeluxe/releases) and the "set install path" field contains the folder with installed fpc / lazarus
 
@@ -41,13 +54,9 @@ Go to the "cross" tab
 
 Select the bitness of the processor and the OS.
 
-*Note*: you can build a crosscompiler for a processor of a different bit capacity on the current platform. The main thing to remember is what bit depth you have running fpcupdeluxe (oftthe sware shown on the screenshot collects a 64-bit fpc for Windows, which means that the x32/i386 compiler assembly will be the "cross-platform" for Windows, etc.)
+> *Note*: you can build a crosscompiler for a processor of a different bit capacity on the current platform. The main thing to remember is what bit depth you have running fpcupdeluxe (oftthe sware shown on the screenshot collects a 64-bit fpc for Windows, which means that the x32/i386 compiler assembly will be the "cross-platform" for Windows, etc.)
 
-
-
-#### Windows
-
-
+#### Windows <a name="crosscompiler_install_win"></a>
 
 Select `CPU = i386` and ` OS = Windows` respectively, and click "Install compiler". Say "Yes" to both dialogues
 
@@ -57,11 +66,9 @@ The x32 compiler should build easily without any additional hassle.
 
 ![](img/cross/cross_05.png)
 
-*Note*: how to make the build mode of the executable file under x32, see [next chapter](#Build-modes-for-cross-compiler).
+> *Note*: how to make the build mode of the executable file under x32, see [next chapter](#Build-modes-for-cross-compiler).
 
-
-
-#### Linux
+#### Linux <a name="crosscompiler_install_linux"></a>
 
 Since the assemblies of the crosscompiler for i386 and amd64 are identical, I will describe the process for the last listed one.
 
@@ -81,11 +88,9 @@ Then we patiently wait for building end.
 
 ![](img/cross/cross_09.png)
 
-*Note*: how to make the build mode of the executable file under i386/amd64, see [next chapter](#Build-modes-for-cross-compiler).
+> *Note*: how to make the build mode of the executable file under i386/amd64, see [next chapter](#Build-modes-for-cross-compiler).
 
-
-
-#### Darwin
+#### Darwin <a name="crosscompiler_install_darwin"></a>
 
 Since for testing my projects under MacOS I use its hackintosh assemblies in a virtual machine that use an x86_64 processor, here I will describe the process of building a crosscompiler of this architecture.
 
@@ -97,8 +102,6 @@ and wait until the utility informs us that it does not currently have a tool for
 
 ![](img/cross/cross_07.png) 
 
-
-
 If we agree, we will be able to observe the process of downloading and unpacking
 
 ![](img/cross/cross_11.png)
@@ -107,11 +110,9 @@ Then we patiently wait for building end.
 
 ![](img/cross/cross_12.png)
 
-*Note*: how to make the build mode of the executable file under x86-64, see [next chapter](#Build-modes-for-cross-compiler).
+> *Note*: how to make the build mode of the executable file under x86-64, see [next chapter](#Build-modes-for-cross-compiler).
 
-
-
-### Build modes for cross compiler
+### Build modes for cross compiler <a name="crosscompilling_build_mode"></a>
 
 To build executable files for different platforms using the cross compiler(s), you need to configure the appropriate build modes in your project. To do this, open your project by Lazarus and open the project properties
 
@@ -121,11 +122,9 @@ In the tree that opens, find "Compiler options" item and proceed to setting the 
 
 ![](img/cross/cross_14.png)
 
-
-
 By default, Lazarus has one build mode ("Default"), which builds an executable file with debug information.
 
-*In this case, the executable file in the "Default" mode will correspond to the bitness of the compiler (as we remember from the previous chapter, the bitness of the compiler will correspond to the bitness of fpcupdeluxe, with which it was builded).*
+> *In this case, the executable file in the "Default" mode will correspond to the bitness of the compiler (as we remember from the previous chapter, the bitness of the compiler will correspond to the bitness of fpcupdeluxe, with which it was builded).*
 
 ![](img/cross/cross_15.png) 
 
@@ -145,20 +144,16 @@ Go to the settings tree to the "Config and Target" item
 
 Sequentially selecting the specified build modes in the "Build modes" drop-down list, set the appropriate settings for each of them:
 
-
-
-| Mode                 | OS     | CPU    | Note                                                         |
-| -------------------- | ------ | ------ | ------------------------------------------------------------ |
+| Mode                 | OS     | CPU    | Note                                                                       |
+| -------------------- | ------ | ------ | -------------------------------------------------------------------------- |
 | Debug                |        |        | do not change the default settings! (if only you are sure of your actions) |
-| Release_win32        | win32  | i386   | Don't uncheck the "Win32 GUI application" checkbox!          |
-| Release_win64        | win64  | x86_64 | Don't uncheck the "Win32 GUI application" checkbox!          |
-| Release_linux_i386   | Linux  | i386   | Don't uncheck the "Win32 GUI application" checkbox!          |
-| Release_linux_amd64  | Linux  | x86_64 | Don't uncheck the "Win32 GUI application" checkbox!          |
-| Release_Darwin_Cocoa | Darwin | x86_64 | Be sure to uncheck "Win32 GUI application"! See note         |
+| Release_win32        | win32  | i386   | Don't uncheck the "Win32 GUI application" checkbox!                        |
+| Release_win64        | win64  | x86_64 | Don't uncheck the "Win32 GUI application" checkbox!                        |
+| Release_linux_i386   | Linux  | i386   | Don't uncheck the "Win32 GUI application" checkbox!                        |
+| Release_linux_amd64  | Linux  | x86_64 | Don't uncheck the "Win32 GUI application" checkbox!                        |
+| Release_Darwin_Cocoa | Darwin | x86_64 | Be sure to uncheck "Win32 GUI application"! See note                       |
 
-*Note*: since each OS uses different widgetsets to display controls on the form(s), then for "my" MacOS (I wrote that I use Darwin with Cocoa widgets in the [previous chapter](#Darwin)) additional settings.
-
-
+> *Note*: since each OS uses different widgetsets to display controls on the form(s), then for "my" MacOS (I wrote that I use Darwin with Cocoa widgets in the [previous chapter](#Darwin)) additional settings.
 
 It is necessary to uncheck "Win32 GUI application"
 
@@ -167,8 +162,6 @@ It is necessary to uncheck "Win32 GUI application"
 and click to link "Select another widgetset" (or go to "Additions and Overrides" item in the project tree)
 
 ![](img/cross/cross_20.png) 
-
-
 
 Select the "Value "Cocoa" item in the "SetLCLWidgetType" drop-down list, and make sure that there is a check mark next to this build mode.
 
@@ -182,25 +175,16 @@ For debug mode, I specify the value for the output file (the "Target file name" 
 
 ![](img/cross/cross_22.png)
 
-
-
 and for "release" assemblies, I set the value: `release\$NameOnly($(ProjFile))-$(TargetCPU)-$(TargetOS)`
 
 Let's say my project file is named "fbutil_wrapper.lpi". Then the finished files get the following names
 
 ![](img/cross/cross_23.png)
 
-
-
-
-
-### Building process of applications via a crosscompiler
+### Building process of applications via a crosscompiler <a name="crosscompilling_building"></a>
 
 To quickly select the build mode, you can use the toolbar or the corresponding menu item. You can build files individually or build all in one pass
 
 ![](img/cross/cross_24.png)   ![](img/cross/cross_25.png)
 
-
-
-**An important point(!)**: if the building process is for another platform, then you cannot build/compile the project using `<F9>` - you will get an error about the impossibility to run the executable file. It is necessary to build/compile an executable file using (if by default) `<Shift>+<F9>`/`<Ctrl>+<F9>`.
-
+> **An important point(!)**: if the building process is for another platform, then you cannot build/compile the project using `<F9>` - you will get an error about the impossibility to run the executable file. It is necessary to build/compile an executable file using (if by default) `<Shift>+<F9>`/`<Ctrl>+<F9>`.
