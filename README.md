@@ -25,7 +25,7 @@ Zoltanleo, aka Док (2021г.)
 [Установка Lazarus c QT-интерфейсом](#installing_qt_lazarus)
  * [Windows](#qt_lazarus_windows)
  * [Linux](#qt_lazarus_linux)
- 
+
 [Кросскомпиляция в FPC](#crosscompilling_fpc)
  * [Установка кросскомпилятора](#crosscompiler_install)
    + [Windows](#crosscompiler_install_win)
@@ -342,7 +342,7 @@ $: make bigide
 
 ## Кросскомпиляция в FPC <a name="crosscompilling_fpc"></a>
 
-### Установка кросскомпилятора <a name="crosscompilling_install"></a> 
+### Установка кросскомпилятора <a name="crosscompiler_install"></a> 
 
 Будем считать, что компилятор и лазарь уже установлены при помощи именно [fpcupdeluxe](https://github.com/LongDirtyAnimAlf/fpcupdeluxe/releases) и в поле "set install path" указана папка с установленными фпц/лазарем
 
