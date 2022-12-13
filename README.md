@@ -336,6 +336,7 @@ $: make bigide
 ```
 
 Результат:
+
 ![](img/qt/qt_10.png)
 
 
