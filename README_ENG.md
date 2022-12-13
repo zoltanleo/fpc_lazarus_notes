@@ -37,11 +37,11 @@ We will assume that the compiler and lazarus are already installed using [fpcupd
 
 Go to the "cross" tab
 
-![](img/cross_01.png)
+![](img/cross/cross_01.png)
 
 Select the bitness of the processor and the OS.
 
-*Note *: you can build a crosscompiler for a processor of a different bit capacity on the current platform. The main thing to remember is what bit depth you have running fpcupdeluxe (oftthe sware shown on the screenshot collects a 64-bit fpc for Windows, which means that the x32/i386 compiler assembly will be the "cross-platform" for Windows, etc.)
+*Note*: you can build a crosscompiler for a processor of a different bit capacity on the current platform. The main thing to remember is what bit depth you have running fpcupdeluxe (oftthe sware shown on the screenshot collects a 64-bit fpc for Windows, which means that the x32/i386 compiler assembly will be the "cross-platform" for Windows, etc.)
 
 
 
@@ -51,11 +51,11 @@ Select the bitness of the processor and the OS.
 
 Select `CPU = i386` and ` OS = Windows` respectively, and click "Install compiler". Say "Yes" to both dialogues
 
-![](img/cross_02.png) ![](img/cross_03.png)
+![](img/cross/cross_02.png) ![](img/cross/cross_03.png)
 
 The x32 compiler should build easily without any additional hassle.
 
-![](img/cross_05.png)
+![](img/cross/cross_05.png)
 
 *Note*: how to make the build mode of the executable file under x32, see [next chapter](#Build-modes-for-cross-compiler).
 
@@ -67,19 +67,19 @@ Since the assemblies of the crosscompiler for i386 and amd64 are identical, I wi
 
 Select `CPU=x86_64` and ` OS=linux` respectively, and click "Install compiler". Say "Yes" to both dialogues
 
-![](img/cross_02.png)  ![](img/cross_06.png)
+![](img/cross/cross_02.png)  ![](img/cross/cross_06.png)
 
 and wait until the utility informs us that it does not currently have a tool for building the crosscompiler. Then she will offer to download them
 
-![](img/cross_07.png)
+![](img/cross/cross_07.png)
 
 If we agree, we will be able to observe the process of downloading and unpacking
 
-![](img/cross_08.png)
+![](img/cross/cross_08.png)
 
 Then we patiently wait for building end.
 
-![](img/cross_09.png)
+![](img/cross/cross_09.png)
 
 *Note*: how to make the build mode of the executable file under i386/amd64, see [next chapter](#Build-modes-for-cross-compiler).
 
@@ -91,21 +91,21 @@ Since for testing my projects under MacOS I use its hackintosh assemblies in a v
 
 Select `CPU=x86_64` and ` OS=Darwin` respectively, and click "Install compiler". Say "Yes" to both dialogues
 
-![](img/cross_02.png) ![](img/cross_10.png)
+![](img/cross/cross_02.png) ![](img/cross/cross_10.png)
 
 and wait until the utility informs us that it does not currently have a tool for building the crosscompiler. Then she will offer to download them
 
-![](img/cross_07.png) 
+![](img/cross/cross_07.png) 
 
 
 
 If we agree, we will be able to observe the process of downloading and unpacking
 
-![](img/cross_11.png)
+![](img/cross/cross_11.png)
 
 Then we patiently wait for building end.
 
-![](img/cross_12.png)
+![](img/cross/cross_12.png)
 
 *Note*: how to make the build mode of the executable file under x86-64, see [next chapter](#Build-modes-for-cross-compiler).
 
@@ -115,33 +115,33 @@ Then we patiently wait for building end.
 
 To build executable files for different platforms using the cross compiler(s), you need to configure the appropriate build modes in your project. To do this, open your project by Lazarus and open the project properties
 
-![](img/cross_13.png)
+![](img/cross/cross_13.png)
 
 In the tree that opens, find "Compiler options" item and proceed to setting the "Build modes" by clicking on the button with the ellipsis
 
-![](img/cross_14.png)
+![](img/cross/cross_14.png)
 
 
 
 By default, Lazarus has one build mode ("Default"), which builds an executable file with debug information.
 
-*In this case, the executable file in the "Default" mode will correspond to the bitness of the compiler (as we remember from the previous chapter, the bitness of the compiler will correspond to the bitness of fpcupdeluxe, with which it was assembled).*
+*In this case, the executable file in the "Default" mode will correspond to the bitness of the compiler (as we remember from the previous chapter, the bitness of the compiler will correspond to the bitness of fpcupdeluxe, with which it was builded).*
 
-![](img/cross_15.png) 
+![](img/cross/cross_15.png) 
 
 Click on the "Create Debug and Release modes" button to create separate debug and release modes.
 
-![](img/cross_16.png)
+![](img/cross/cross_16.png)
 
 Now you can delete the "Default" mode and add a couple of more release modes for our needs, remembering to rename them accordingly
 
-![](img/cross_17.png)
+![](img/cross/cross_17.png)
 
 Now close the window and set up your modes.
 
 Go to the settings tree to the "Config and Target" item
 
-![](img/cross_18.png)
+![](img/cross/cross_18.png)
 
 Sequentially selecting the specified build modes in the "Build modes" drop-down list, set the appropriate settings for each of them:
 
@@ -162,17 +162,17 @@ Sequentially selecting the specified build modes in the "Build modes" drop-down 
 
 It is necessary to uncheck "Win32 GUI application"
 
-![](img/cross_19.png)
+![](img/cross/cross_19.png)
 
 and click to link "Select another widgetset" (or go to "Additions and Overrides" item in the project tree)
 
-![](img/cross_20.png) 
+![](img/cross/cross_20.png) 
 
 
 
 Select the "Value "Cocoa" item in the "SetLCLWidgetType" drop-down list, and make sure that there is a check mark next to this build mode.
 
-![](img/cross_21.png)
+![](img/cross/cross_21.png)
 
 and close the dialog.
 
@@ -180,7 +180,7 @@ If you start building a project in different modes, then all executable files wi
 
 For debug mode, I specify the value for the output file (the "Target file name" field): `debug\$NameOnly($(ProjFile))-debug`
 
-![](img/cross_22.png)
+![](img/cross/cross_22.png)
 
 
 
@@ -188,7 +188,7 @@ and for "release" assemblies, I set the value: `release\$NameOnly($(ProjFile))-$
 
 Let's say my project file is named "fbutil_wrapper.lpi". Then the finished files get the following names
 
-![](img/cross_23.png)
+![](img/cross/cross_23.png)
 
 
 
@@ -198,7 +198,7 @@ Let's say my project file is named "fbutil_wrapper.lpi". Then the finished files
 
 To quickly select the build mode, you can use the toolbar or the corresponding menu item. You can build files individually or build all in one pass
 
-![](img/cross_24.png)   ![](img/cross_25.png)
+![](img/cross/cross_24.png)   ![](img/cross/cross_25.png)
 
 
 
