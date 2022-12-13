@@ -19,9 +19,11 @@ Zoltanleo, aka Док (2021г.)
 [Building FPC/Lazarus](#building_fpc_lazarus)
  * [Building via batch files](#building_via_batch_files)
  * [Building via fpcupdeluxe](#building_via_fpcupdeluxe)
+ 
 [Установка Lazarus c QT-интерфейсом](#installing_qt_lazarus)
  * [Windows](#qt_lazarus_windows)
  * [Linux](#qt_lazarus_linux)
+ 
 [Cross compilation to FPC](#crosscompilling_fpc)
  * [Installing the crosscompiler](#crosscompiler_install)
    + [Windows](#crosscompiler_install_win)
