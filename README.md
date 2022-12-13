@@ -21,9 +21,11 @@ Zoltanleo, aka Док (2021г.)
 [Сборка FPC/Lazarus](#building_fpc_lazarus)
  * [Сборка с помощью bat-файлов](#building_via_batch_files)
  * [Сборка с помощью fpcupdeluxe](#building_via_fpcupdeluxe)
+ 
 [Установка Lazarus c QT-интерфейсом](#installing_qt_lazarus)
  * [Windows](#qt_lazarus_windows)
  * [Linux](#qt_lazarus_linux)
+ 
 [Кросскомпиляция в FPC](#crosscompilling_fpc)
  * [Установка кросскомпилятора](#crosscompiler_install)
    + [Windows](#crosscompiler_install_win)
