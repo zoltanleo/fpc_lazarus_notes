@@ -20,7 +20,7 @@ Zoltanleo, aka Док (2021г.)
  * [Building via batch files](#building_via_batch_files)
  * [Building via fpcupdeluxe](#building_via_fpcupdeluxe)
  
-[Установка Lazarus c QT-интерфейсом](#installing_qt_lazarus)
+[Installing Lazarus with QT interface](#installing_qt_lazarus)
  * [Windows](#qt_lazarus_windows)
  * [Linux](#qt_lazarus_linux)
  
@@ -42,6 +42,293 @@ Coming soon ...
 ### Building via fpcupdeluxe <a name="building_via_fpcupdeluxe"></a>
 
 Coming soon ...
+
+## Installing Lazarus with QT interface <a name="installing_qt_lazarus"></a>
+
+By default, Lazarus is installed with a Win32 window interface. To get an IDE with a qt interface, you must first build the library (dll/so) with which the IDE will be built. Also, under Linux it is necessary that the qt interface be supported by the desktop (e.g. KDE Plasma).
+
+#### Windows <a name="qt_lazarus_windows"></a>
+
+To begin with, we need the binaries and libraries of the qt framework. You can get them using [online-](https://www.qt.io/download-qt-installer) or [offline-](https://www.qt.io/offline-installers)installers.
+
+When you go to the download page, an online-installer is offered by default.
+
+![](img/qt/qt_01.png)
+
+If the installation of the binaries will be carried out using the online installer, then an account from the qt-creator website will be required. Therefore, take care of this in advance.
+
+![](img/qt/qt_03.png)
+
+
+In order not to suffer with registration and / or bypassing a ridiculous IP blocker, you can do the following:
+- download the offline installer from the link above (you can use the direct link and use a third-party downloader https://mirror.netcologne.de/qtproject/archive/qt/5.12/5.12.12/qt-opensource-windows-x86-5.12.12.exe).
+- disconnect your internet connection and run the installer
+- then the installer allows you to immediately proceed to the installation of the necessary components
+
+![](img/qt/qt_05.png)
+ 
+- set the installation directory
+
+![](img/qt/qt_06.png)
+
+
+- mark in the section ***"Qt x.x.x"*** the item *"MinGWx.x.x win64"* (for x32, mark  *"MinGWx.x.x. win32"* instead) and in the section ***" Developer and Designer Tools"*** items *"MinGWx.x.x win64"* (for x32 mark *"MinGWx.x.x. win32"* instead) and *"Qt Creator x.x.x. CDB Debugger Support"*
+
+![](img/qt/qt_07.png)
+
+- next, install the binaries and libraries step by step, uncheck the box on the last page so as not to start Qt creator, and close the installer
+
+![](img/qt/qt_08.png)
+
+
+Now we have a set of binaries and libraries of the Qt framework (I have them installed here):
+```bash
+c:\Qt\5.12.12\mingw73_64\bin 
+c:\Qt\Tools\mingw730_64\bin
+c:\Qt\Tools\QtCreator\bin
+```
+
+To continue working with utilities from the console, you need to add them to the environment variables either through the registry (I did this) or through the console:
+```bash
+set PATH=c:\Qt\5.12.12\mingw73_64\bin;c:\Qt\Tools\mingw730_64\bin;c:\Qt\Tools\QtCreator\bin;%PATH%
+```
+> ***Note:*** *if you get this message while building a dll*
+```bash
+Qt5Pas_resource.rc:1: windows.h: No such file or directory
+windres: Qt5Pas_resource.rc:12: syntax error
+windres: preprocessing failed.
+mingw32-make: *** [Makefile:1463: tmp/Qt5Pas_resource_res.o] Error 1
+```
+
+> *this means, most likely, that the *windres.exe* utility is used ***not*** from the set installed by Qt (I have it here c:\Qt\Tools\mingw730_64\bin), but from another directory (e.g. , the gnu compiler directory *fpc.exe*/*ppcx.exe* also contains this file). This should be taken into account when specifying the order of the paths. This determines where the compiler will first look for this utility.*
+
+
+So, we will assume that all preliminary preparation is completed (you should already have the compiler and git client installed).
+
+Download the source code of Lazarus
+```bash
+C:\Users\leyba>md c:\laz_qt
+C:\Users\leyba>cd c:\laz_qt
+c:\laz_qt>git clone https://gitlab.com/freepascal.org/lazarus/lazarus.git
+```
+Next, go to the folder with the lazarus Qt5 source code
+```bash
+c:\laz_qt>cd c:\laz_qt\lazarus\lcl\interfaces\qt5\cbindings\
+```
+
+Check if all the environment variables we need are set correctly
+```bash
+c:\laz_qt\lazarus\lcl\interfaces\qt5\cbindings>qmake -query
+QT_SYSROOT:
+QT_INSTALL_PREFIX:C:/Qt/5.12.12/mingw73_64
+QT_INSTALL_ARCHDATA:C:/Qt/5.12.12/mingw73_64
+QT_INSTALL_DATA:C:/Qt/5.12.12/mingw73_64
+QT_INSTALL_DOCS:C:/Qt/Docs/Qt-5.12.12
+QT_INSTALL_HEADERS:C:/Qt/5.12.12/mingw73_64/include
+QT_INSTALL_LIBS:C:/Qt/5.12.12/mingw73_64/lib
+QT_INSTALL_LIBEXECS:C:/Qt/5.12.12/mingw73_64/bin
+QT_INSTALL_BINS:C:/Qt/5.12.12/mingw73_64/bin
+QT_INSTALL_TESTS:C:/Qt/5.12.12/mingw73_64/tests
+QT_INSTALL_PLUGINS:C:/Qt/5.12.12/mingw73_64/plugins
+QT_INSTALL_IMPORTS:C:/Qt/5.12.12/mingw73_64/imports
+QT_INSTALL_QML:C:/Qt/5.12.12/mingw73_64/qml
+QT_INSTALL_TRANSLATIONS:C:/Qt/5.12.12/mingw73_64/translations
+QT_INSTALL_CONFIGURATION:
+QT_INSTALL_EXAMPLES:C:/Qt/Examples/Qt-5.12.12
+QT_INSTALL_DEMOS:C:/Qt/Examples/Qt-5.12.12
+QT_HOST_PREFIX:C:/Qt/5.12.12/mingw73_64
+QT_HOST_DATA:C:/Qt/5.12.12/mingw73_64
+QT_HOST_BINS:C:/Qt/5.12.12/mingw73_64/bin
+QT_HOST_LIBS:C:/Qt/5.12.12/mingw73_64/lib
+QMAKE_SPEC:win32-g++
+QMAKE_XSPEC:win32-g++
+QMAKE_VERSION:3.1
+QT_VERSION:5.12.12
+```
+
+If the output ends with any error, then you need to revise the paths and redefine them.
+ 
+If we get the output shown above, then we proceed to create *Makefile* with the build script:
+```bash
+c:\laz_qt\lazarus\lcl\interfaces\qt5\cbindings>qmake
+Info: creating stash file C:\laz_qt\lazarus\lcl\interfaces\qt5\cbindings\.qmake.stash
+Project MESSAGE: Note: This binding version was generated for Qt 5.6.1. Current Qt is 5.12.12
+Project MESSAGE: Qt documents binary compatibility in each Version Change Note: http://qt.nokia.com/developer/changes
+Project MESSAGE: Pascal Qt Interface for binding platform: MSWINDOWS
+Project MESSAGE: Install location: C:/Qt5/5.12.12/mingw73_64/bin
+```
+
+Now we can start building the Qt5 library. We start a long process:
+```bash
+c:\laz_qt\lazarus\lcl\interfaces\qt5\cbindings>mingw32-make
+```
+Let's go get some coffee... :)
+
+The result will be the creation of ***Qt5Pas1.dll*** in the same directory as ***qt5.pas***, which is needed to build the same.
+
+In order not to copy files to the lazarus root directory, add this folder to the path (in the registry or in the console) as described above.
+
+Now proceed directly to the assembly of Lazarus
+```bash
+c:\laz_qt\lazarus\lcl\interfaces\qt5\cbindings>cd c:\laz_qt\lazarus
+c:\laz_qt\lazarus> make bigide LCL_PLATFORM=qt5
+```
+
+As a result, we get Lazarus with qt interface
+
+![](img/qt/qt_09.png)
+
+
+#### Linux <a name="qt_lazarus_linux"></a>
+
+Building lazarus-qt for Linux is easiest if the desktop environment is KDE Plasma (e.g, it comes with Debian, Kubuntu, Open SUSE). Installation on Linux is much easier than on Windows.
+
+I'll use the Debian-like Kubuntu OS to describe the process.
+
+ We will assume that you already have the compiler and git installed.
+
+Download the Lazarus source code and go to the folder with qt5
+```bash
+$: md ~/laz_qt
+$: cd ~/laz_qt
+$: git clone https://gitlab.com/freepascal.org/lazarus/lazarus.git
+$: cd ~/laz_qt/lazarus/lcl/interfaces/qt5/cbindings
+```
+Check if we have the necessary packages installed:
+```bash
+$: qmake -query
+```
+If we receive a message
+```bash
+bash: qmake: command not found
+```
+so we do not have this package and we need to install it:
+```bash
+$: sudo apt install qt5-qmake
+```
+
+Again we try to run the qt compiler:
+```bash
+$:qmake
+```
+
+If we get an error:
+```bash
+"Project ERROR: Unknown module(s) in QT: core gui network printsupport x11extras"
+```
+so we are missing a few more qt-modules. We look at the sign (taken from [here](https://webhamster.ru/mytetrashare/index/mtb0/1620975455yvmf403xxv)):
+
+|Qt module|dev package|lib package|
+|------|------|------|
+|bluetooth|qtconnectivity5-dev|libqt5bluetooth5|
+|concurrent|qtbase5-dev|libqt5concurrent5|
+|connectivity|qtmobility-dev|libqtconnectivity1|
+|contacts|qtmobility-dev|libqt5contacts5|
+|core|qtbase5-dev|libqt5core5a|
+|dbus|qtbase5-dev|libqt5dbus5|
+|designer|qttools5-dev|libqt5designer5|
+|designercomponents|qttools5-dev|libqt5designercomponents5|
+|feedback|qtmobility-dev|libqt5feedback5|
+|gallery|qtmobility-dev|libqtgallery1|
+|gui|qtbase5-dev|libqt5gui5|
+|help|qttools5-dev|libqt5help5|
+|location|qtmobility-dev|libqt5location5|
+|multimedia|qtmultimedia5-dev|libqt5multimedia5|
+|multimediakit|qtmobility-dev|libqtmultimediakit1|
+|network|qtbase5-dev|libqt5network5|
+|networkauth|libqt5networkauth5-dev|libqt5networkauth5|
+|nfc|qtconnectivity5-dev|libqt5nfc5|
+|opengl|libqt5opengl5-dev|libqt5opengl5|
+|organizer|qtmobility-dev|libqt5organizer5|
+|positioning|qtpositioning5-dev|libqt5positioning5|
+|printsupport|qtbase5-dev|libqt5printsupport5|
+|publishsubscribe|qtmobility-dev|libqt5publishsubscribe5|
+|qml|qtdeclarative5-dev|libqt5qml5|
+|quick|qtdeclarative5-dev|libqt5quick5|
+|quickparticles|qtdeclarative5-dev|libqt5quickparticles5|
+|quicktest|qtdeclarative5-dev|libqt5quicktest5|
+|quickwidgets|qtdeclarative5-dev|libqt5quickwidgets5|
+|script|qtscript5-dev|libqt5script5|
+|scripttools|qtscript5-dev|libqt5scripttools5|
+|sensors|qtmobility-dev, libqt5sensors5-dev|libqt5sensors5|
+|serialport|libqt5serialport5-dev|libqt5serialport5|
+|serviceframework|qtmobility-dev|libqt5serviceframework5|
+|sql|qtbase5-dev|libqt5sql5|
+|svg|libqt5svg5-dev|libqt5svg5|
+|systeminfo|qtmobility-dev|libqt5systeminfo5|
+|test|qtbase5-dev|libqt5test5|
+|uitools|qttools5-dev|?|
+|versit|qtmobility-dev|libqtversit1|
+|webchannel|?|?|
+|webkit|libqt5webkit5-dev|libqt5webkit5|
+|websockets|libqt5websockets5-dev|libqt5websockets5|
+|widgets|qtbase5-dev|libqt5widgets5|
+|x11extras|libqt5x11extras5-dev|libqt5x11extras5|
+|xml|qtbase5-dev|libqt5xml5|
+|xmlpatterns|libqt5xmlpatterns5-dev|libqt5xmlpatterns5|
+
+In our case, these are modules:
+- core (qtbase5-dev)
+- gui (qtbase5-dev)
+- network (qtbase5-dev)
+- printsupport (qtbase5-dev)
+- x11extras (libqt5x11extras5-dev)
+
+They are located in the *qtbase5-dev* and *libqt5x11extras5-dev* packages. We put them:
+```bash
+$: sudo apt install qtbase5-dev libqt5x11extras5-dev
+```
+
+Now let's try again:
+```bash
+$: qmake
+
+Project MESSAGE: Note: This binding version was generated for Qt 5.6.1. Current Qt is 5.15.3
+Project MESSAGE: Qt documents binary compatibility in each Version Change Note: http://qt.nokia.com/developer/changes
+Project MESSAGE: Adding x11extras for XOrg platform.
+Project MESSAGE: Pascal Qt Interface for binding platform: BINUX
+Project MESSAGE: Install location: /usr/lib/x86_64-linux-gnu
+```
+The result of this will be the creation of a Makefile. 
+
+Now we are trying to build the libraries
+```bash
+$: make
+```
+If we receive a message:
+```bash
+make: *** No targets specified and no makefile found.  Stop.
+```
+this means that the Makefile generation process failed. We will try to repeat the process until it completes successfully.
+
+If everything is in order, then the long process of compiling libraries will begin, which will end with the output:
+```bash
+ln -s libQt5Pas.so.1.2.10 libQt5Pas.so
+ln -s libQt5Pas.so.1.2.10 libQt5Pas.so.1
+ln -s libQt5Pas.so.1.2.10 libQt5Pas.so.1.2
+```
+
+Now you can install them in system directories
+```bash
+$: sudo make install
+
+/usr/lib/qt5/bin/qmake -install qinstall -exe libQt5Pas.so.1.2.10 /usr/lib/x86_64-linux-gnu/libQt5Pas.so.1.2.10
+strip --strip-unneeded /usr/lib/x86_64-linux-gnu/libQt5Pas.so.1.2.10
+ln -f -s libQt5Pas.so.1.2.10 /usr/lib/x86_64-linux-gnu/libQt5Pas.so
+ln -f -s libQt5Pas.so.1.2.10 /usr/lib/x86_64-linux-gnu/libQt5Pas.so.1
+ln -f -s libQt5Pas.so.1.2.10 /usr/lib/x86_64-linux-gnu/libQt5Pas.so.1.2
+```
+
+And finally we will try to build Lazarus 
+```bash
+$: cd ~/laz_qt/lazarus
+$: make bigide
+```
+
+And here is the expected result:
+
+![](img/qt/qt_10.png)
+
 
 ## Cross compilation to FPC <a name="crosscompilling_fpc"></a>
 
