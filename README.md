@@ -49,6 +49,10 @@ Coming soon ...
 
 По умолчанию Лазарус устанавливается с оконным интерфейсом Win32. Чтобы собрать IDE c qt-интерфейсом, необходимо предварительно скопилировать библиотеку (dll/so), при помощи которой будет осуществлена сборка среды. Кроме того, под ОС Linux необходимо, чтобы qt-интерфейс поддерживался рабочим столом (например, KDE Plasma).
 
+Дополнительно подробности можно узнать из [Wiki](https://wiki.freepascal.org/Qt5_Interface) Лазаруса.
+
+> Отдельная благодарность юзерам [**zeljko**](https://forum.lazarus.freepascal.org/index.php?action=profile;u=129) и [**dbannon**](https://forum.lazarus.freepascal.org/index.php?action=profile;u=60561) с [форума](https://forum.lazarus.freepascal.org/index.php?action=forum) за ценные замечания.
+
 #### Windows <a name="qt_lazarus_windows"></a>
 
 Для начала нам понадобятся бинарные файлы и библиотеки qt-фреймворка. Удобнее всего их получить при помощи [online-](https://www.qt.io/download-qt-installer) или [offline-](https://www.qt.io/offline-installers)инсталляторов.
@@ -308,7 +312,11 @@ $: make
 ```bash
 make: *** No targets specified and no makefile found.  Stop.
 ```
-значит Makefile у нас так и не собрался. Повторяем процесс.
+значит библиотеки libQt5Pas у нас уже собраны. Если необходимо из пересобрать, то делаем:
+```bash
+$: make clean
+$: make
+```
 
 Если все в порядке, то начнется длительный процесс компиляции библиотек, который закончится выводом:
 ```bash
@@ -331,7 +339,7 @@ ln -f -s libQt5Pas.so.1.2.10 /usr/lib/x86_64-linux-gnu/libQt5Pas.so.1.2
 Теперь собираем Лазарус 
 ```bash
 $: cd ~/laz_qt/lazarus
-$: make bigide
+$: make bigide LCL_PLATFORM=qt5
 ```
 
 Результат:

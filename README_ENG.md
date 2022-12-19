@@ -47,6 +47,10 @@ Coming soon ...
 
 By default, Lazarus is installed with a Win32 window interface. To get an IDE with a qt interface, you must first build the library (dll/so) with which the IDE will be built. Also, under Linux it is necessary that the qt interface be supported by the desktop (e.g. KDE Plasma).
 
+More details can be found in the [Wiki](https://wiki.freepascal.org/Qt5_Interface) of Lazarus.
+
+> Special thanks to users [**zeljko**](https://forum.lazarus.freepascal.org/index.php?action=profile;u=129) и [**dbannon**](https://forum.lazarus.freepascal.org/index.php?action=profile;u=60561) from the [forum](https://forum.lazarus.freepascal.org/index.php?action=forum) for valuable comments and notes. 
+
 #### Windows <a name="qt_lazarus_windows"></a>
 
 To begin with, we need the binaries and libraries of the qt framework. You can get them using [online-](https://www.qt.io/download-qt-installer) or [offline-](https://www.qt.io/offline-installers)installers.
@@ -299,7 +303,11 @@ If we receive a message:
 ```bash
 make: *** No targets specified and no makefile found.  Stop.
 ```
-this means that the Makefile generation process failed. We will try to repeat the process until it completes successfully.
+it means that we have already built the libQt5Pas libraries. If it is necessary to rebuild from, then we do:
+```bash
+$: make clean
+$: make
+```
 
 If everything is in order, then the long process of compiling libraries will begin, which will end with the output:
 ```bash
@@ -322,7 +330,7 @@ ln -f -s libQt5Pas.so.1.2.10 /usr/lib/x86_64-linux-gnu/libQt5Pas.so.1.2
 And finally we will try to build Lazarus 
 ```bash
 $: cd ~/laz_qt/lazarus
-$: make bigide
+$: make bigide LCL_PLATFORM=qt5
 ```
 
 And here is the expected result:
