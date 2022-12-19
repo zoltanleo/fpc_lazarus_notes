@@ -312,7 +312,7 @@ $: make
 ```bash
 make: *** No targets specified and no makefile found.  Stop.
 ```
-значит библиотеки libQt5Pas у нас уже собраны. Если необходимо из пересобрать, то делаем:
+значит библиотеки libQt5Pas у нас уже собраны. Если необходимо их пересобрать, то делаем:
 ```bash
 $: make clean
 $: make
