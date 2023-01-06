@@ -101,11 +101,12 @@ Coming soon ...
 c:\Qt\5.12.12\mingw73_64\bin 
 c:\Qt\Tools\mingw730_64\bin
 c:\Qt\Tools\QtCreator\bin
+c:\Qt\Tools\mingw730_64\x86_64-w64-mingw32\bin\
 ```
 
 Чтобы дальше работать из консоли с утилитами, необходимо добавить их в переменные окружения либо через реестр (я сделал так), либо через консоль
 ```bash
-set PATH=c:\Qt\5.12.12\mingw73_64\bin;c:\Qt\Tools\mingw730_64\bin;c:\Qt\Tools\QtCreator\bin;%PATH%
+set PATH=c:\Qt\5.12.12\mingw73_64\bin;c:\Qt\Tools\mingw730_64\bin;c:\Qt\Tools\QtCreator\bin;c:\Qt\Tools\mingw730_64\x86_64-w64-mingw32\bin;%PATH%
 ```
 > ***Примечание:*** *если во время сборки dll вы получаете вот такое сообщение*
 ```bash
@@ -184,10 +185,28 @@ c:\laz_qt\lazarus\lcl\interfaces\qt5\cbindings>mingw32-make
 Теперь приступаем непосредственно к сборке Лазаруса:
 ```bash
 c:\laz_qt\lazarus\lcl\interfaces\qt5\cbindings>cd c:\laz_qt\lazarus
-c:\laz_qt\lazarus> make bigide LCL_PLATFORM=qt5
+c:\laz_qt\lazarus> make clean all bigide LCL_PLATFORM=qt5
 ```
 
-Результатом будет создание Лазаруса с интерфейсом qt
+****
+>***Примечание:*** если вы собрали компилятор с отдельным конфигом в отдельную папку (например, при помощи **fpcupdeluxe**), то можно воспользоваться следующим скриптом
+```bash
+set root_dir=c:\laz_qt
+set fpc_bin_dir=%root_dir%\fpc\bin\x86_64-win64
+set make_bin_dir=%root_dir%\fpcbootstrap
+
+#чистим Лазарь
+%make_bin_dir%\make.exe FPC=%fpc_bin_dir%\fpc.exe PP=%fpc_bin_dir%\ppcx64.exe PREFIX=%root_dir%\lazarus INSTALL_PREFIX=%root_dir%\lazarus LAZARUS_INSTALL_DIR=%root_dir%\lazarus\ UPXPROG=echo OS_SOURCE=win64 CPU_SOURCE=x86_64 OS_TARGET=win64 CPU_TARGET=x86_64 --directory=%root_dir%\lazarus distclean
+
+#собираем
+%make_bin_dir%\make.exe --directory=%root_dir%\lazarus FPC=%fpc_bin_dir%\fpc.exe PP=%fpc_bin_dir%\ppcx64.exe USESVN2REVISIONINC=0 PREFIX=%root_dir%\lazarus INSTALL_PREFIX=%root_dir%\lazarus LAZARUS_INSTALL_DIR=%root_dir%\lazarus\ FPCDIR=%root_dir%\fpcsrc FPCMAKE=%fpc_bin_dir%\fpcmake.exe PPUMOVE=%fpc_bin_dir%\ppumove.exe UPXPROG=echo OPT=-vw-n-h-l-d-u-t-p-c- lazbuild
+
+# ставим qt5
+%make_bin_dir%\make --directory=%root_dir%\lazarus FPC=%fpc_bin_dir%\fpc.exe PP=%fpc_bin_dir%\ppcx64.exe USESVN2REVISIONINC=0 PREFIX=%root_dir%\lazarus INSTALL_PREFIX=%root_dir%\lazarus LAZARUS_INSTALL_DIR=%root_dir%\lazarus FPCDIR=%root_dir%\fpcsrc FPCMAKE=%fpc_bin_dir%\fpcmake.exe PPUMOVE=%fpc_bin_dir%\ppumove.exe OPT=-vw-n-h-l-d-u-t-p-c- bigide LCL_PLATFORM=qt5
+```
+****
+
+Результатом будет создание Лазаруса с интерфейсом qt5
 
 ![](img/qt/qt_09.png)
 

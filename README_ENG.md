@@ -90,11 +90,12 @@ Now we have a set of binaries and libraries of the Qt framework (I have them ins
 c:\Qt\5.12.12\mingw73_64\bin 
 c:\Qt\Tools\mingw730_64\bin
 c:\Qt\Tools\QtCreator\bin
+c:\Qt\Tools\mingw730_64\x86_64-w64-mingw32\bin\
 ```
 
 To continue working with utilities from the console, you need to add them to the environment variables either through the registry (I did this) or through the console:
 ```bash
-set PATH=c:\Qt\5.12.12\mingw73_64\bin;c:\Qt\Tools\mingw730_64\bin;c:\Qt\Tools\QtCreator\bin;%PATH%
+set PATH=c:\Qt\5.12.12\mingw73_64\bin;c:\Qt\Tools\mingw730_64\bin;c:\Qt\Tools\QtCreator\bin;c:\Qt\Tools\mingw730_64\x86_64-w64-mingw32\bin;%PATH%
 ```
 > ***Note:*** *if you get this message while building a dll*
 ```bash
@@ -175,8 +176,27 @@ In order not to copy files to the lazarus root directory, add this folder to the
 Now proceed directly to the assembly of Lazarus
 ```bash
 c:\laz_qt\lazarus\lcl\interfaces\qt5\cbindings>cd c:\laz_qt\lazarus
-c:\laz_qt\lazarus> make bigide LCL_PLATFORM=qt5
+c:\laz_qt\lazarus> make clean all bigide LCL_PLATFORM=qt5
 ```
+
+
+****
+>***Note:*** if you have build a fpc with a separate config into a separate folder (e.g., using **fpcupdeluxe**), then you can use the following script
+```bash
+set root_dir=c:\laz_qt
+set fpc_bin_dir=%root_dir%\fpc\bin\x86_64-win64
+set make_bin_dir=%root_dir%\fpcbootstrap
+
+#clean
+%make_bin_dir%\make.exe FPC=%fpc_bin_dir%\fpc.exe PP=%fpc_bin_dir%\ppcx64.exe PREFIX=%root_dir%\lazarus INSTALL_PREFIX=%root_dir%\lazarus LAZARUS_INSTALL_DIR=%root_dir%\lazarus\ UPXPROG=echo OS_SOURCE=win64 CPU_SOURCE=x86_64 OS_TARGET=win64 CPU_TARGET=x86_64 --directory=%root_dir%\lazarus distclean
+
+#build
+%make_bin_dir%\make.exe --directory=%root_dir%\lazarus FPC=%fpc_bin_dir%\fpc.exe PP=%fpc_bin_dir%\ppcx64.exe USESVN2REVISIONINC=0 PREFIX=%root_dir%\lazarus INSTALL_PREFIX=%root_dir%\lazarus LAZARUS_INSTALL_DIR=%root_dir%\lazarus\ FPCDIR=%root_dir%\fpcsrc FPCMAKE=%fpc_bin_dir%\fpcmake.exe PPUMOVE=%fpc_bin_dir%\ppumove.exe UPXPROG=echo OPT=-vw-n-h-l-d-u-t-p-c- lazbuild
+
+# install qt5
+%make_bin_dir%\make --directory=%root_dir%\lazarus FPC=%fpc_bin_dir%\fpc.exe PP=%fpc_bin_dir%\ppcx64.exe USESVN2REVISIONINC=0 PREFIX=%root_dir%\lazarus INSTALL_PREFIX=%root_dir%\lazarus LAZARUS_INSTALL_DIR=%root_dir%\lazarus FPCDIR=%root_dir%\fpcsrc FPCMAKE=%fpc_bin_dir%\fpcmake.exe PPUMOVE=%fpc_bin_dir%\ppumove.exe OPT=-vw-n-h-l-d-u-t-p-c- bigide LCL_PLATFORM=qt5
+```
+****
 
 As a result, we get Lazarus with qt interface
 
