@@ -353,6 +353,11 @@ $: cd ~/laz_qt/lazarus
 $: make bigide LCL_PLATFORM=qt5
 ```
 
+> *Note*: if you installed the compiler using fpcupdeluxe, you need to specify the path to the fpc.sh file in the command line. Thus, the line in the terminal will look something like this:
+```bash
+$: make bigide FPC="<full-path-to-the-folder-with-fpc.sh>" LCL_PLATFORM=qt5
+```
+
 And here is the expected result:
 
 ![](img/qt/qt_10.png)
